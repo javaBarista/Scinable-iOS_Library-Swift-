@@ -5,35 +5,88 @@ iOS 푸시알림을 위한 정적 라이브러리 코드, 이미지 푸시 서�
 
 <img src="https://user-images.githubusercontent.com/48575996/72697865-e9a75180-3b84-11ea-8e8a-37782e53e123.png" width="20%"></img>
 
-## 설치 방법
+## 설정 방법
 
-OS X & 리눅스:
+#### CSR 요청 및 발급  
+1. 키체인 접근 >> 인증서 지원 >> 인증기관에서 인증서 요청 >> 사용자 이메일 주소 입력, 이름 입력, 디스크에 저장됨 선택 후 계속 클릭 >> 저장
+<img src="https://user-images.githubusercontent.com/48575996/67170862-47de6000-f3ef-11e9-8cdd-8dcb9256292e.png" height="40%" width="30%"></img>  
+  
+2. App ID 만들기  
+   1. Apple Developer 접속 -> [링크](https://developer.apple.com/kr/)  
+   2. [Account] 탭 클릭 후 로그인 -> [Certificates, Identifiers & Profiles] 탭 클릭 -> [Identifiers] 탭 클릭 후 '+' 버튼 클릭 -> 'App IDs' 항목이 선택된 채로 Continue 버튼 클릭  
+   3. 프로젝트의 Bundle ID와 Description을 입력 -> [Capabilities] 의 항목 중 'Push Notification'항목을 선택한 후 Continue 클릭 -> 확인 후 Register 클릭  
+3. 인증서 등록  
+   * Apple Developer 사이트 -> -Account- Certificates, Identifiers & Profiles에서 [Certificates] 탭 클릭 후 '+' 버튼 클릭 -> 'IOS App Development'선택 후 Continue 클릭 -> Choose File 키를 클릭하여 인증서 선택(키체인을 통해 발급해두었던 인증서를 등록), Continue 버튼 클릭 후 Download하여 원하는 위치에 저장 (.cer 파일) >> 키체인에서 좌측의 '로그인' 을 클릭하여 열어둔 상태로 둔 후, 조금 전에 Download 받았던 [ .cer] 파일을 더블클릭하고 새로운 인증서가 키체인 목록에 추가되는 것을 확인  
+4. 디바이스 등록 : Apple Developer 사이트 - Account - Certificates, Identifiers & Profiles에서 [Devices] 탭 클릭 후 '+' 버튼 클릭 -> Device Name과 Device ID(UDID)를 작성한 후 Continue 버튼 클릭 -> 확인 후 Register 버튼 클릭  
+5. 프로비저닝 프로파일 등록 : Apple Developer 사이트 -Account- Certificates, Identifiers & Profiles에서 [Profiles] 탭 클릭 후 '+' 버튼 클릭 -> 'IOS App Development' 항목 선택 후 Continue 클릭 -> 생성했던 App ID를 선택 후 Continue 클릭 -> 생성했던 인증서 선택 후 Continue  클릭 -> 등록한 디바이스 선택 후 Continue 클릭 -> 프로비저닝 프로파일의 이름을 설정한 후 Generate 버튼 클릭 -> Download 버튼 클릭하여 원하는 위치에 저장  
+6. P12 인증키 생성 : Apple Developer 사이트 -Account- Certificates, Identifiers & Profiles에서 [Keys] 탭 클릭 후 '+' 버튼 클릭 -> Key Name 입력 및 'Apple Push Notifications service (APNs)' 항목 선택 후 Continue 버튼 클릭 -> 키 정보 확인 후 Register 버튼 클릭, Download 버튼 클릭하여 원하는 위치에 저장 (주의. 키를 다운로드 하면 이후에 다운로드 할 수 없음, 또한 파일 탐색으로 키를 검색할 수 없으니 저장한 위치를 잘 기억해 둘 것)  
+#### FCM 등록  
+1. Firebase Console 접속 -> [링크](https://firebase.google.com/?hl=ko)  
+2. 시작하기 -> 프로젝트 추가 -> 원하는 프로젝트명 작성  
+3. 앱 추가 Platfrom iOS 클릭 후 이동  
+4. 본인의 프로젝트명 입력 ex) com.example.push_Example  
+5. 제공되는 plist 파일을 설명대로 본인의 프로젝트에 추가
+6. FCM에 등록한 앱 설정 -> [클라우드메시징] 탭으로 이동 [APN인증서] 선택 후 인증서 등록
 
-```sh
-npm install my-crazy-module --save
-```
-
-윈도우:
-
-```sh
-edit autoexec.bat
-```
-
-## 사용 예제
-
-스크린 샷과 코드 예제를 통해 사용 방법을 자세히 설명합니다.
-
-_더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
-
-## 개발 환경 설정
-
-모든 개발 의존성 설치 방법과 자동 테스트 슈트 실행 방법을 운영체제 별로 작성합니다.
-
-```sh
-make install
-npm test
-```
-
+#### 프로그램 설정
+1. CoCoaPod
+   1. 제공된 Podfile에서 '**MyProject**' 부분에 자신의 project 이름 입력  
+   2. 터미널에서 프로젝트의 경로로 이동 후 `pod install` 명령어를 실행한다.  
+2. XCode  
+    1. Cocoapod을 통해 생성된 .xcworkspace를 실행  
+    2. Project의 Build Phases 메뉴  
+        1. Link Binary With Libraries 부분에 제공된 정적 라이브러리(.a) 추가  
+        2. Embed App Extensions부분에 이미지 푸시를 위해 제공된 노티피케이션 확장 모듈 추가(.appex)  
+        **".appex의 경우 제공전 경로를 고객의 project경로로 수정해야 오류가 안생긴다."**   
+3. Swift  
+    1. 토큰생성을 위한 makeToken메서드를 호출하기위해 디바이스로부터 값을 호출한뒤 넘겨준다.  
+      ```sh
+      func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){  
+           pushLib.makeToken(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)  
+      }
+      ```  
+    2. 등록실패 처리를 위한 메소드를 호출하기위한 추가  
+      ```sh
+      func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error){  
+         pushLib.registerFail(application, didFailToRegisterForRemoteNotificationsWithError: error)  
+      }
+      ```  
+    3. 서버로부터 메시지를 받았을때 처리를위한 메소드를 호출  
+      ```sh
+      func application(_ application: UIApplication, didReceiveRemoteNotification data: [AnyHashable : Any], fetchCompletionHandler       fatch: @escaping(UIBackgroundFetchResult)->Void){  
+        pushLib.receiveMessage(application, didReceiveRemoteNotification: data, fetchCompletionHandler: fatch)  
+      } 
+      ```  
+ 4. Objective-C  
+   1. Project 파일 안에 ProjectName으로된 Source code가 모인 파일에 제공되는 (.h)헤더파일 삽입  
+   2. AppDelegate.m 에서 `#import "PushLib-Swift.h"`선언  
+   3. @implementation단위 (swift에선 class와 동일)에서 `PushLib *ps` 선언으로 클래스 호출  
+   4. Bool을 반환하는 application 메소드(기본으로 생성되어있다.)에서 `ps=[PushLib alloc]init];`으로 클래스 초기화  
+   5. 메소드 추가
+      1. 토큰생성을 위한 makeToken메서드를 호출하기위해 디바이스로부터 값을 호출한뒤 넘겨준다.  
+      ```sh
+       - (void)application:(UIApplication *)application
+       didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken { 
+       [ps makeToken:application didRegisterForRemoteNotificationsWithDeviceToken: deviceToken];  
+       }
+      ```
+      2.  등록실패 처리를 위한 메소드를 호출하기위한 추가  
+      ```sh
+       - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {  
+       [ps registerFail:application didFailToRegisterForRemoteNotificationsWithError:error];  
+       }
+      ```
+      3. 서버로부터 메시지를 받았을때 처리를위한 메소드를 호출  
+      ```sh
+       - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *) userInfo fetchCompletionHandler:          (void (^)(UIBackgroundFetchResult))completionHandler{  
+       [ps receiveMessage:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];  
+       }
+      ```
+   6. 오류발생시 Project -> New file -> swift파일 생성(해당파일은 빈파일)   
+5. ios의 경우 푸시의 갯수인 뱃지룰 앱 단위에서 초기화해야 한다.  
+     `applicationDidBecomeActivity`부분에 
+         `application.applicationIconBadgeNumber = 0` 추가  
+         
 ## 업데이트 내역
 
 * 0.2.1
@@ -49,26 +102,6 @@ npm test
 * 0.0.1
     * 작업 진행 중
 
-## 정보
+## 구현 정보
 
-이름 – [@트위터 주소](https://twitter.com/dbader_org) – 이메일주소@example.com
 
-XYZ 라이센스를 준수하며 ``LICENSE``에서 자세한 정보를 확인할 수 있습니다.
-
-[https://github.com/yourname/github-link](https://github.com/dbader/)
-
-## 기여 방법
-
-1. (<https://github.com/yourname/yourproject/fork>)을 포크합니다.
-2. (`git checkout -b feature/fooBar`) 명령어로 새 브랜치를 만드세요.
-3. (`git commit -am 'Add some fooBar'`) 명령어로 커밋하세요.
-4. (`git push origin feature/fooBar`) 명령어로 브랜치에 푸시하세요. 
-5. 풀리퀘스트를 보내주세요.
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
