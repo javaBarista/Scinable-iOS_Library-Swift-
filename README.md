@@ -9,7 +9,7 @@ iOS 푸시알림을 위한 정적 라이브러리 코드, 이미지 푸시 서�
 
 #### CSR 요청 및 발급  
 1. 키체인 접근 >> 인증서 지원 >> 인증기관에서 인증서 요청 >> 사용자 이메일 주소 입력, 이름 입력, 디스크에 저장됨 선택 후 계속 클릭 >> 저장
-<img src="https://user-images.githubusercontent.com/48575996/67170862-47de6000-f3ef-11e9-8cdd-8dcb9256292e.png" height="40%" width="30%"></img>  
+<img src="https://user-images.githubusercontent.com/48575996/67170862-47de6000-f3ef-11e9-8cdd-8dcb9256292e.png" width="30%"></img>  
   
 2. App ID 만들기  
    1. Apple Developer 접속 -> [링크](https://developer.apple.com/kr/)  
