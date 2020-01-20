@@ -1,10 +1,10 @@
 # Scinable-iOS_Library-Swift-  
 > iOS Notification Service를 위한 Static Library (Swift 작성)  
 
-iOS 푸시알림을 위한 정적 라이브러리 코드, 이미지 푸시 서비스 및 푸시함, 웹뷰를  통한 광고기능 제공
-
+iOS 푸시알림을 위한 정적 라이브러리 코드, 이미지 푸시 서비스 및 푸시함, 웹뷰를  통한 광고기능 제공  
+  
 <img src="https://user-images.githubusercontent.com/48575996/72697865-e9a75180-3b84-11ea-8e8a-37782e53e123.png" width="20%"></img>
-
+  
 ## 설정 방법
 
 #### CSR 요청 및 발급  
