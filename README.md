@@ -110,4 +110,7 @@ iOS 푸시알림을 위한 정적 라이브러리 코드, 이미지 푸시 서�
 
 ## 구현 정보
 
-
+XCode의 Extended Notification Service 추가 하여 푸시알림을 수신 하도록 설정, android와 마찬가지로 토큰값을 같은 서버DB에 올려야 하기 때문에 Alamofire를 사용하여 post형식으로 토큰값과 Plarform정보를 함께 전송한다.
+광고의 쿠폰이나 이미지 정보같은 추가적인 확장 기능을 위하여 이미지 URl을 내부에서 다운하여 푸시알림에 띄우도록 하였다.
+이때 FCM의 키를 이용하여 Php로 작성한 서버에서 보내기 때문에 이미지 푸시 확장을 위한 트리거인 `mutable_content=true`, `content_available=true`를 함께 data payload 형식으로 보내 기기에서 받도록 하였다.  
+라이브러리를 swift로 작성하여 Objective-C
