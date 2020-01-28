@@ -117,3 +117,5 @@ XCode의 Extended Notification Service 추가 하여 푸시알림을 수신 하�
 
 푸시함의 경우 table View를 사용하고 Cell을 커스텀하여 android의 푸시함과 동일하게 구현하였으며 Cell은 서버DB로부터 푸시함 정보를 가져와 비동기로 구성해준다.
 이때 alamofire objectmapper를 사용하여 json형식을 class 형식에 맞게 가져와 리스트를 구성한다. 
+구성된 cell 클릭시 이미지URI가 있다면 bitmap형식으로 변환하여 android와 동일하게 Alert을 커스터마이징하여 제목, 본문 ,이미기, 수신날짜 등을 띄우며 광고 홍보URI가 있다면 클릭시 Web View를 통해 창을 띄운다.
+이 부분에서 Table View Activity -> Web View Activity 로의 값 전달이 아닌 Alert -> Web View로의 URI정보 전달이기 때문에 Segue를 사용할 수 없었고 userdefaults 를 사용해 URI를 저장한 뒤 URI에 트리거를 걸어 Web View가 실행시 userdefaults에서 URI값을 꺼내와 페이지를 표시 하도록 하였다.  
